@@ -7,9 +7,18 @@ column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
 unitlist = row_units + column_units + square_units
 
-# TODO: Update the unit list to add the new diagonal units
-unitlist = unitlist
+first_diagonal = []
+second_diagonal = []
 
+for i in zip(row_units, column_units):
+    first_diagonal.append( * ( set(i[0]) & set(i[1]) ) )
+    
+for i in zip(row_units, column_units[::-1]):
+    second_diagonal.append( * ( set(i[0]) & set(i[1]) ))
+
+diagonal_units = [first_diagonal] + [second_diagonal]
+
+unitlist = unitlist + diagonal_units
 
 # Must be called after all units (including diagonals) are added to the unitlist
 units = extract_units(unitlist, boxes)
